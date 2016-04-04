@@ -52,16 +52,27 @@ void listalke::start()
 void listalke::create_listalke() //описание функции ввода данных
 {
     cout<<"Enter values:"<<endl;
-    cout<<"Length lister - ";
+    cout<<"Length listalke - ";
     cin>>length;
     cout<<"Total pages - ";
     cin>>totalPages;
     cout<<"Current page - ";
     cin>>currentPage;
+    if (currentPage>totalPages)
+    {
+        cout<<"Incorrect values! Current page large total pages."<<endl;
+        create_listalke();   //рекурсивное обращение к функции
+    }
+    if (length>totalPages)
+    {
+        cout<<"Incorrect values! Length listalke large total pages."<<endl;
+        cout<<"Length listalke - ";
+        cin>>length;
+    }
 
 }
 
-void listalke::list_pages()  //описание возвращает массив страниц
+void listalke::list_pages()  //описание функции возврата массива страниц
 {
     listPages.clear();
     listPages.push_back(currentPage);
@@ -88,7 +99,7 @@ void listalke::list_pages()  //описание возвращает масси�
 }
 
 
-void listalke::print_listalke() //возвращает текст страницы
+void listalke::print_listalke() //описание функции возврата текста страницы
 {
     //cout<<"Length: "<<this->length<<endl;
     //cout<<"Total pages: "<<this->totalPages<<endl;
