@@ -90,9 +90,9 @@ void listalke::list_pages()  //описание возвращает масси�
 
 void listalke::print_listalke() //возвращает текст страницы
 {
-    cout<<"Length: "<<this->length<<endl;
-    cout<<"Total pages: "<<this->totalPages<<endl;
-    cout<<"Current page: "<<this->currentPage<<endl;
+    //cout<<"Length: "<<this->length<<endl;
+    //cout<<"Total pages: "<<this->totalPages<<endl;
+    //cout<<"Current page: "<<this->currentPage<<endl;
 
 
     cout << "1" << " << ";
