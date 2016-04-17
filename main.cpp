@@ -2,6 +2,8 @@
 #include <iostream>
 #include <math.h>
 #include <list>
+#include <ctype.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -12,16 +14,42 @@ class listalke
     int totalPages; //общее число страниц
     list<int> listPages; //массив номеров страниц
     protected:
-        void list_pages();  //возвращает массив страниц
-        void print_listalke(); //возвращает текст страницы
+        void list_pages();  //функция возвращающая массив страниц
+        void print_listalke(); //функция возвращающая текст страницы
     public:
         listalke();  //конструктор по умолчанию
         listalke(int length); //конструктор с заданной длиной
         ~listalke() {}; //деструктор
-        void start();
-        void create_listalke(); //ввод исходных данных
+        void start(); //функция запуска листалки
+        void create_listalke(); //функция ввода исходных данных
 
 };
+
+bool IsValidInt(char* x){
+    bool Checked = true;
+    int i = 0;
+    do
+    {
+        //valid digit?
+        if (isdigit(x[i]))
+        {
+            //to the next character
+            i++;
+            Checked = true;
+        }
+        else
+        {
+            //to the next character
+            i++;
+            Checked = false;
+            break;
+        }
+    } while (x[i] != '\0');
+
+    return Checked;
+}
+
+
 
 listalke::listalke() //описание конструктора по умолчанию
 {
@@ -67,12 +95,46 @@ void listalke::start()
 void listalke::create_listalke() //описание функции ввода данных
 {
     cout<<"Enter values:"<<endl;
-    cout<<"Length listalke - ";
-    cin>>length;
-    cout<<"Total pages - ";
-    cin>>totalPages;
-    cout<<"Current page - ";
-    cin>>currentPage;
+    bool correctInput=0;
+    while (correctInput==0) {
+        char str[]="";
+        cout<<"Length lister - ";
+        cin>>str;
+        if (IsValidInt(str)){
+            length=atoi(str);
+            correctInput=1;
+        }
+        else {
+            cout<<"Incorrect input! Lenght lister should be decimal! Please, repeat correct input!"<<endl;
+        }
+    }
+    correctInput=0;
+    while (correctInput==0) {
+        char str[]="";
+        cout<<"Total pages - ";
+        cin>>str;
+        if (IsValidInt(str)){
+            totalPages=atoi(str);
+            correctInput=1;
+        }
+        else {
+            cout<<"Incorrect input! Total pages should be decimal! Please, repeat correct input!"<<endl;
+        }
+    }
+    correctInput=0;
+    while (correctInput==0) {
+        char str[]="";
+        cout<<"Current page - ";
+        cin>>str;
+        if (IsValidInt(str)){
+            currentPage=atoi(str);
+            correctInput=1;
+        }
+        else {
+            cout<<"Incorrect input! Current page should be decimal! Please, repeat correct input!"<<endl;
+        }
+    }
+
     if (currentPage>totalPages)
     {
         cout<<"Incorrect values! Current page large total pages."<<endl;
@@ -179,11 +241,6 @@ void listalke::list_pages()  //описание функции возврата 
 
 void listalke::print_listalke() //описание функции возврата текста страницы
 {
-    //cout<<"Length: "<<this->length<<endl;
-    //cout<<"Total pages: "<<this->totalPages<<endl;
-    //cout<<"Current page: "<<this->currentPage<<endl;
-
-
     cout << "1" << " << ";
     for ( list<int>::iterator it = listPages.begin(); it != listPages.end(); ++it  )
     {
