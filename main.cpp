@@ -45,9 +45,24 @@ listalke::listalke(int length1)  //описание конструктора с 
 void listalke::start()
 {
     create_listalke();
-    list_pages();
-    print_listalke();
-}
+    if ((currentPage==0) || (length==0) || (totalPages==0))
+    {
+        cout <<"Error! Incorrect values!"<<endl;
+        cout <<"0"<<endl;
+    }
+    else
+    {
+        if ((currentPage==1) || (length==1) || (totalPages==1))
+        {
+            cout <<currentPage<<endl;
+        }
+        else
+        {
+            list_pages();
+            print_listalke();
+        }
+    }
+ }
 
 void listalke::create_listalke() //описание функции ввода данных
 {
@@ -75,87 +90,89 @@ void listalke::list_pages()  //описание функции возврата 
 {
     listPages.clear();  //очищаем список выводимых страниц
     listPages.push_back(currentPage); //добавляем текущую страницу
+    int a=0;
+    int c=1;
+    int b=0;
+
+            if (currentPage==totalPages) a =1;  //текущая - последняя страница
+            else {
+                if (currentPage==1)  a =2;  //текущая - первая страница
+                else {
+                    if((totalPages-currentPage)<=(length/2)) a =3; //текущая страница ближе к концу
+                    else {
+                        if((currentPage-1)<=(length/2)) a =4;//текущая страница ближе к началу
+                        else {
+                            if (length % 2 == 0)  a =5;  //четное число выводимых страниц
+                        }
+                    }
+                }
+            }
 
 
-    if (currentPage==totalPages)  //текущая - последняя страница
+
+
+    switch (a)
     {
+    case (1):
         for(int i=0; i<length-1; i++)
         {
             listPages.push_front(currentPage-i-1);
         }
-    }
-
-    else
-    {
-        if (currentPage==1)  //текущая - первая страница
+        break;
+    case (2):
+        for(int i=0; i<length-1; i++)
         {
-            for(int i=0; i<length-1; i++)
-            {
-                listPages.push_back(currentPage+i+1);
-            }
+            listPages.push_back(currentPage+i+1);
         }
-
-        else
+        break;
+    case (3):
+        c=1;
+        for (int i=currentPage; i<totalPages-1;i++)
         {
-            if((totalPages-currentPage)<=(length/2)) //текущая страница ближе к концу
-            {
-                int c=1;
-                for (int i=currentPage; i<totalPages-1;i++)
-                {
-                    listPages.push_front(currentPage-c);
-                    listPages.push_back(currentPage+c);
-                    c++;
-                }
-                            //дописываем недостающие страницы в начало
-                int b=length-(c-1)*2+1;
-
-                for (int i=0; i<b; i++)
-                {
-                    listPages.push_front(currentPage-c-i);
-                }
-            }
-
-            if((currentPage-1)<=(length/2)) //текущая страница ближе к началу
-            {
-                int c=1;
-                for (int i=currentPage-1; i>1;i--)
-                {
-                    listPages.push_front(currentPage-c);
-                    listPages.push_back(currentPage+c);
-                    c++;
-                }
-                            //дописываем недостающие страницы в конец
-                int b=length-(c-1)*2+1;
-                for (int i=0; i<b; i++)
-                {
-                    listPages.push_back(currentPage+c+i);
-                }
-            }
-            else
-            {
-                if(length % 2 == 0)
-                {
-                //четное число выводимых страниц
-
-                    for (int i=0; i<((length/2)-1);i++)
-                    {
-                        listPages.push_front(currentPage-i-1);
-                        listPages.push_back(currentPage+i+1);
-                    }
-                    listPages.push_back(currentPage+(length/2)+1);
-                }
-                else
-                {
-                    //не четное число выводимых страниц
-
-                    for (int i=0; i<round(length/2);i++)
-                    {
-                        listPages.push_front(currentPage-i-1);
-                        listPages.push_back(currentPage+i+1);
-                    }
-                }
-            }
+            listPages.push_front(currentPage-c);
+            listPages.push_back(currentPage+c);
+            c++;
         }
+                    //дописываем недостающие страницы в начало
+        b=length-(c-1)*2+1;
+
+        for (int i=0; i<b; i++)
+        {
+            listPages.push_front(currentPage-c-i);
+        }
+        break;
+    case (4):
+        c=1;
+        for (int i=currentPage-1; i>1;i--)
+        {
+            listPages.push_front(currentPage-c);
+            listPages.push_back(currentPage+c);
+            c++;
+        }
+                    //дописываем недостающие страницы в конец
+        b=length-(c-1)*2+1;
+        for (int i=0; i<b; i++)
+        {
+            listPages.push_back(currentPage+c+i);
+        }
+        break;
+    case (5):
+        for (int i=0; i<((length/2)-1);i++)
+        {
+            listPages.push_front(currentPage-i-1);
+            listPages.push_back(currentPage+i+1);
+        }
+        listPages.push_back(currentPage+(length/2)+1);
+        break;
+    default:
+        //не четное число выводимых страниц
+
+        for (int i=0; i<round(length/2);i++)
+        {
+            listPages.push_front(currentPage-i-1);
+            listPages.push_back(currentPage+i+1);
+        }
+        break;
     }
 }
 
@@ -172,15 +189,16 @@ void listalke::print_listalke() //описание функции возврат
     {
         if(*it==currentPage)
         {
-            cout<<"["<< *it << "]"<<' ';
-        }
-        else
-        {
+        cout<<"["<< *it << "]"<<' ';
+    }
+    else
+          {
             cout << *it << ' ';
         }
     }
     cout<< ">> " << totalPages;
 }
+
 
 
 int main()
