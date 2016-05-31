@@ -1,11 +1,7 @@
 all:
 	g++ -o runner.out --coverage runner.cpp
-	export GCOV_PREFIX=î./î
+	export GCOV_PREFIX=‚Äù./‚Äù
 	export GCOV_PREFIX_STRIP=6
 	./runner.out
-	cp ../runner.gcno .
 	lcov -t "result" -o ex_test.info -c -d .
 	genhtml -o res ex_test.info
-	./res/index.html
-
-	

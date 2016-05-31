@@ -111,22 +111,8 @@ string listalke::start(int length1, int totalPages1, int currentPage1)
 
     else
     {
-        if ((length==1) && (totalPages==1)&&(currentPage!=1))
-        {            
-            arrayPage = "0";
-            cout <<arrayPage<<endl;
-        }
-        else if ((length!=1) && (totalPages==1)&&(currentPage!=1))
-        {
-            arrayPage = "0";
-            cout <<arrayPage<<endl;
-        }
-
-        else
-        {
-            list_pages();
-            print_listalke();
-        }
+      list_pages();
+      print_listalke();
     }
     //cout<<"Result: "<<arrayPage<<endl;
     return arrayPage;
@@ -136,7 +122,7 @@ void listalke::create_listalke() //описание функции ввода д
 {
     bool correctInput=0;
     while (correctInput==0) {
-        char str[]="";
+        char str[255]="";
         //cout<<"Length lister - ";
 
        //itoa(length,str,10);
@@ -153,7 +139,7 @@ void listalke::create_listalke() //описание функции ввода д
     }
     correctInput=0;
     while (correctInput==0) {
-        char str[]="";
+        char str[255]="";
         //cout<<"Total pages - ";
         //cin>>str;
         //itoa(totalPages,str,10);
@@ -169,7 +155,7 @@ void listalke::create_listalke() //описание функции ввода д
     }
     correctInput=0;
     while (correctInput==0) {
-        char str[]="";
+        char str[255]="";
         //cout<<"Current page - ";
         //cin>>str;
         //itoa(currentPage,str,10);
@@ -227,19 +213,23 @@ void listalke::list_pages()  //описание функции возврата 
         }
         break;
     case (3):
-        c=1;
-        for (int i=currentPage; i<totalPages-1;i++)
+        c=0;
+        for (int i=0; i<totalPages-currentPage;i++)
         {
-            listPages.push_front(currentPage-c);
-            listPages.push_back(currentPage+c);
-            c++;
+	 if(currentPage+i+1!=totalPages)
+		{
+            	listPages.push_back(currentPage+(i+1));
+		c++;
+		}
+          listPages.push_front(currentPage-i-1);
+          c++;
         }
                     //дописываем недостающие страницы в начало
-        b=length-(c-1)*2+1;
+        b=length-(c+1);
 
         for (int i=0; i<b; i++)
         {
-            listPages.push_front(currentPage-c-i);
+            listPages.push_front(currentPage-c-i-1);
         }
         break;
     case (4):
