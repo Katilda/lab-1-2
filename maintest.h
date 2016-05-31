@@ -62,7 +62,7 @@ listalke::listalke() //описание конструктора по умолч
     length =0;
     listPages.push_back (0);
     arrayPage="";
-    cout<<"Object created!"<<endl;
+    //cout<<"Object created!"<<endl;
 }
 
 listalke::listalke(int length1, int totalPages1, int currentPage1)  //описание конструктора с заданной длиной
@@ -72,7 +72,7 @@ listalke::listalke(int length1, int totalPages1, int currentPage1)  //описа
     length = length1;
     listPages.push_back (0);
     arrayPage="";
-    cout<<"Object created!"<<endl;
+    //cout<<"Object created!"<<endl;
 }
 
 
@@ -128,7 +128,7 @@ string listalke::start(int length1, int totalPages1, int currentPage1)
             print_listalke();
         }
     }
-//    cout<<"Result: "<<arrayPage<<endl;
+    //cout<<"Result: "<<arrayPage<<endl;
     return arrayPage;
  }
 
@@ -243,18 +243,22 @@ void listalke::list_pages()  //описание функции возврата 
         }
         break;
     case (4):
-        c=1;
-        for (int i=currentPage-1; i>1;i--)
+        c=0;
+        for (int i=0; i<currentPage-1;i++)
         {
-            listPages.push_front(currentPage-c);
-            listPages.push_back(currentPage+c);
+            if (currentPage-(i+1)!=1)
+            {
+            listPages.push_front(currentPage-i-1);
+            c++;
+            }
+            listPages.push_back(currentPage+i+1);
             c++;
         }
                     //дописываем недостающие страницы в конец
-        b=length-(c-1)*2+1;
+        b=length-c-1;//потому что потом мы вычтем 1 из b
         for (int i=0; i<b; i++)
         {
-            listPages.push_back(currentPage+c+i);
+            listPages.push_back(currentPage+c+i+1);
         }
         break;
     case (5):

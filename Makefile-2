@@ -1,0 +1,4 @@
+all:
+	cxxtestgen --error-printer -o runner.cpp TestMain.h
+	g++ -o runner runner.cpp
+	./runner
